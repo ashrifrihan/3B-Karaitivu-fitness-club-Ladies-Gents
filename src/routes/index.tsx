@@ -15,6 +15,7 @@ import about1 from "@/assets/about-1.jpg";
 import gal1 from "@/assets/gallery-1.jpg";
 import gal2 from "@/assets/gallery-2.jpg";
 import gal3 from "@/assets/gallery-3.jpg";
+import logoImg from "@/assets/logo.png";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -26,7 +27,8 @@ export const Route = createFileRoute("/")({
           "@context": "https://schema.org",
           "@type": "HealthClub",
           name: "3B Karaitivu Fitness Club Ladies & Gents",
-          image: "/og.jpg",
+          image: "/logo.png",
+          logo: "/logo.png",
           address: {
             "@type": "PostalAddress",
             streetAddress: "11 Main Street",
@@ -130,9 +132,12 @@ function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-5 flex items-center justify-between gap-4">
-        <a href="#top" className="flex items-center gap-2 shrink-0">
-          <span className="grid place-items-center h-9 w-9 rounded-xl bg-primary text-primary-foreground font-black text-lg">3B</span>
-          <span className="font-bold text-sm sm:text-base tracking-tight hidden sm:block">Karaitivu Fitness</span>
+        <a href="#top" className="flex items-center gap-3 shrink-0 group">
+          <img src={logoImg} alt="3B Karaitivu Fitness Club Logo" className="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
+          <div className="flex flex-col">
+            <span className="font-bold text-sm sm:text-base tracking-tight leading-none text-foreground">3B Karaitivu</span>
+            <span className="text-[10px] tracking-wider uppercase font-semibold text-primary">Fitness Club</span>
+          </div>
         </a>
         <nav className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
           {links.map(([l, h]) => (
@@ -160,6 +165,10 @@ function Navbar() {
             className="md:hidden overflow-hidden bg-background/95 backdrop-blur-xl border-t border-border"
           >
             <div className="px-5 py-4 flex flex-col gap-3">
+              <div className="flex items-center gap-3 pb-3 border-b border-border mb-1">
+                <img src={logoImg} alt="3B Karaitivu Fitness Club Logo" className="h-8 w-auto object-contain" />
+                <span className="font-bold text-sm">3B Karaitivu Fitness Club</span>
+              </div>
               {links.map(([l, h]) => (
                 <a key={h} href={h} onClick={() => setOpen(false)} className="py-2 text-foreground/90">{l}</a>
               ))}
@@ -186,9 +195,10 @@ function Hero() {
       </motion.div>
 
       <motion.div style={{ opacity }} className="relative z-10 max-w-7xl mx-auto px-5 pt-32 sm:pt-40 pb-20 min-h-screen flex flex-col justify-center">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="inline-flex items-center gap-2 self-start rounded-full border border-border bg-card/60 backdrop-blur px-3 py-1.5 text-xs mb-6">
-          <span className="h-2 w-2 rounded-full bg-primary shadow-[0_0_10px_var(--primary)]" />
-          Karaitivu · Ladies & Gents Fitness Club
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="inline-flex items-center gap-2.5 self-start rounded-full border border-border bg-card/70 backdrop-blur-md px-3.5 py-1.5 text-xs sm:text-sm mb-6 shadow-lg">
+          <img src={logoImg} alt="3B Karaitivu Fitness Club Logo" className="h-6 w-auto object-contain" />
+          <span className="h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_10px_var(--primary)]" />
+          <span>Karaitivu · Ladies & Gents Fitness Club</span>
         </motion.div>
 
         <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tight max-w-4xl">
@@ -601,9 +611,12 @@ function Footer() {
     <footer className="border-t border-border bg-card/30">
       <div className="max-w-7xl mx-auto px-5 py-14 grid md:grid-cols-3 gap-10">
         <div>
-          <div className="flex items-center gap-2 mb-4">
-            <span className="grid place-items-center h-9 w-9 rounded-xl bg-primary text-primary-foreground font-black text-lg">3B</span>
-            <span className="font-bold">Karaitivu Fitness</span>
+          <div className="flex items-center gap-3 mb-4">
+            <img src={logoImg} alt="3B Karaitivu Fitness Club Logo" className="h-12 w-auto object-contain" />
+            <div>
+              <div className="font-bold text-base leading-none">3B Karaitivu</div>
+              <div className="text-xs text-primary font-semibold tracking-wider uppercase">Fitness Club</div>
+            </div>
           </div>
           <p className="text-sm text-muted-foreground max-w-xs">Karaitivu's premier fitness club — separate Ladies & Gents sections, open daily.</p>
         </div>
