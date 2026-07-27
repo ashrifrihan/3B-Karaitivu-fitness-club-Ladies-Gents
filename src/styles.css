@@ -5,6 +5,30 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
+ * Self-hosted variable fonts, latin subset (the files Google serves for the
+ * latin unicode-range). Preloaded in __root.tsx — no third-party round trip.
+ *
+ * Archivo carries a width axis (62%-125%), which is what lets display type
+ * compress on narrow screens instead of shrinking. See --font-display usage.
+ */
+@font-face {
+  font-family: "Archivo";
+  src: url("/fonts/archivo-latin-var.woff2") format("woff2-variations");
+  font-weight: 400 900;
+  font-stretch: 62% 125%;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter Tight";
+  src: url("/fonts/inter-tight-latin-var.woff2") format("woff2-variations");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/*
  * Design system definition.
  *
  * The @theme inline block maps CSS custom properties to Tailwind utility
@@ -59,35 +83,56 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-ember: var(--ember);
+  --color-ember-hi: var(--ember-hi);
+  --color-lagoon: var(--lagoon);
+  --color-lagoon-deep: var(--lagoon-deep);
+  --color-ink-3: var(--ink-3);
+  --font-display: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  /* Act rhythm: tight (Act II, dense) / normal / open (Act I + III, calm) */
+  --spacing-act-tight: 4rem;
+  --spacing-act: 6rem;
+  --spacing-act-open: 9rem;
 }
 
 :root {
   --radius: 0.875rem;
-  /* 3B Karaitivu Fitness — dark base + neon green + red accents */
-  --background: oklch(0.14 0.01 260);
-  --foreground: oklch(0.98 0.005 250);
-  --card: oklch(0.18 0.012 260);
-  --card-foreground: oklch(0.98 0.005 250);
-  --popover: oklch(0.18 0.012 260);
-  --popover-foreground: oklch(0.98 0.005 250);
-  --primary: oklch(0.88 0.24 140);
-  --primary-foreground: oklch(0.14 0.02 260);
-  --primary-glow: oklch(0.9 0.28 140);
-  --secondary: oklch(0.22 0.015 260);
-  --secondary-foreground: oklch(0.98 0.005 250);
-  --muted: oklch(0.22 0.015 260);
-  --muted-foreground: oklch(0.7 0.02 260);
-  --accent: oklch(0.65 0.24 25);
-  --accent-foreground: oklch(0.98 0.005 250);
-  --destructive: oklch(0.65 0.24 25);
-  --destructive-foreground: oklch(0.98 0.005 250);
-  --border: oklch(0.28 0.015 260);
-  --input: oklch(0.24 0.015 260);
-  --ring: oklch(0.88 0.24 140);
-  --gradient-hero: linear-gradient(135deg, oklch(0.14 0.02 260) 0%, oklch(0.1 0.01 260) 100%);
-  --gradient-neon: linear-gradient(90deg, oklch(0.88 0.24 140), oklch(0.9 0.28 155));
-  --shadow-glow: 0 0 40px oklch(0.88 0.24 140 / 0.4), 0 0 80px oklch(0.88 0.24 140 / 0.2);
-  --shadow-red: 0 0 30px oklch(0.65 0.24 25 / 0.4);
+  /*
+   * "Six AM" — the gym at 6am, sodium lights, before the town wakes up.
+   * Warm dark rather than blue dark. Ember (amber) carries all emphasis;
+   * lagoon (teal) is the calm counterweight and the Ladies-zone treatment.
+   */
+  --ink: oklch(0.145 0.012 45);
+  --ink-2: oklch(0.19 0.014 45);
+  --ink-3: oklch(0.24 0.016 45);
+  --ember: oklch(0.76 0.165 62);
+  --ember-hi: oklch(0.84 0.14 72);
+  --lagoon: oklch(0.6 0.085 205);
+  --lagoon-deep: oklch(0.42 0.075 210);
+
+  --background: var(--ink);
+  --foreground: oklch(0.965 0.008 80);
+  --card: var(--ink-2);
+  --card-foreground: oklch(0.965 0.008 80);
+  --popover: var(--ink-2);
+  --popover-foreground: oklch(0.965 0.008 80);
+  --primary: var(--ember);
+  --primary-foreground: oklch(0.145 0.012 45);
+  --primary-glow: var(--ember-hi);
+  --secondary: var(--ink-3);
+  --secondary-foreground: oklch(0.965 0.008 80);
+  --muted: var(--ink-3);
+  --muted-foreground: oklch(0.72 0.015 70);
+  --accent: var(--lagoon);
+  --accent-foreground: oklch(0.145 0.012 45);
+  --destructive: oklch(0.62 0.2 28);
+  --destructive-foreground: oklch(0.965 0.008 80);
+  --border: oklch(0.32 0.014 45);
+  --input: oklch(0.26 0.014 45);
+  --ring: var(--ember);
+  --gradient-hero: linear-gradient(135deg, oklch(0.145 0.012 45) 0%, oklch(0.11 0.01 45) 100%);
+  --shadow-glow: 0 0 40px oklch(0.76 0.165 62 / 0.3), 0 0 80px oklch(0.76 0.165 62 / 0.14);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -103,40 +148,12 @@
   --sidebar-ring: oklch(0.704 0.04 256.788);
 }
 
-.dark {
-  --background: oklch(0.129 0.042 264.695);
-  --foreground: oklch(0.984 0.003 247.858);
-  --card: oklch(0.208 0.042 265.755);
-  --card-foreground: oklch(0.984 0.003 247.858);
-  --popover: oklch(0.208 0.042 265.755);
-  --popover-foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.929 0.013 255.508);
-  --primary-foreground: oklch(0.208 0.042 265.755);
-  --secondary: oklch(0.279 0.041 260.031);
-  --secondary-foreground: oklch(0.984 0.003 247.858);
-  --muted: oklch(0.279 0.041 260.031);
-  --muted-foreground: oklch(0.704 0.04 256.788);
-  --accent: oklch(0.279 0.041 260.031);
-  --accent-foreground: oklch(0.984 0.003 247.858);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.551 0.027 264.364);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.208 0.042 265.755);
-  --sidebar-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.279 0.041 260.031);
-  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.551 0.027 264.364);
-}
+/*
+ * This site is dark-only — :root above *is* the dark theme. The stock shadcn
+ * `.dark` override block was removed: it still held the blue-charcoal defaults
+ * and would have clobbered the Six AM palette if `class="dark"` ever landed on
+ * an ancestor.
+ */
 
 @layer base {
   * {
@@ -146,15 +163,62 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
-    font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
-  html { scroll-behavior: smooth; }
-  h1, h2, h3, h4 { font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif; letter-spacing: -0.02em; }
+
+  /*
+   * No `scroll-behavior: smooth` — it fights ScrollTrigger's scroll position
+   * reads and makes anchor jumps animate twice. Anchor links are instant.
+   */
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-stretch: 112%;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+}
+
+@utility display-tight {
+  /* Narrow viewports compress the width axis instead of dropping font-size,
+     so headlines stay physically large on a 375px screen. */
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-stretch: 88%;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+@utility eyebrow {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-stretch: 100%;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.75rem;
 }
 
 @theme inline {
   --shadow-glow: var(--shadow-glow);
-  --shadow-red: var(--shadow-red);
   --color-primary-glow: var(--primary-glow);
+}
+
+/*
+ * Testimonial marquee. Transform-only so it stays on the compositor; the track
+ * duplicates its content, so -50% is one seamless lap. Starts paused and is
+ * played/paused by IntersectionObserver in Testimonials.tsx.
+ */
+@keyframes marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
