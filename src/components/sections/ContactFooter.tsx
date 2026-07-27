@@ -1,4 +1,4 @@
-import { MapPin, Phone, Clock, Instagram, Facebook, MessageCircle } from "lucide-react";
+import { MapPin, Phone, Clock, Instagram, Facebook, MessageCircle, Mail } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { Reveal } from "@/components/Reveal";
 import { CLUB } from "@/lib/club";
@@ -49,6 +49,17 @@ export function ContactFooter() {
                   <div>
                     <div className="font-medium">{CLUB.phoneDisplay}</div>
                     <div className="text-sm text-muted-foreground">Tap to call</div>
+                  </div>
+                </a>
+
+                <a
+                  href={CLUB.emailHref}
+                  className="flex items-start gap-4 rounded-2xl border border-white/8 bg-ink-2/50 p-4 hover:border-primary/50 transition-colors"
+                >
+                  <Mail className="text-primary shrink-0" size={20} />
+                  <div>
+                    <div className="font-medium text-sm sm:text-base">{CLUB.email}</div>
+                    <div className="text-sm text-muted-foreground">Email us</div>
                   </div>
                 </a>
 
@@ -137,6 +148,11 @@ export function ContactFooter() {
               <li>
                 <a href={CLUB.phoneHref} className="hover:text-foreground transition-colors">
                   {CLUB.phoneDisplay}
+                </a>
+              </li>
+              <li>
+                <a href={CLUB.emailHref} className="hover:text-foreground transition-colors">
+                  {CLUB.email}
                 </a>
               </li>
               <li>Daily · 6–10 AM &amp; 4:30–10 PM</li>
