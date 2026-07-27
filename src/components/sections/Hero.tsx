@@ -1,139 +1,195 @@
 import { useRef } from "react";
-import { motion, useScroll, useTransform } from "motion/react";
-import { Phone, Clock, Star, ChevronDown, ArrowRight } from "lucide-react";
+import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
+import { Phone, MapPin, Star } from "lucide-react";
 import { Img } from "@/components/Img";
-import { Logo } from "@/components/Logo";
-import { CLUB } from "@/lib/club";
+import { CLUB, reviews } from "@/lib/club";
 
-/**
- * Act I — Arrive. Open rhythm, full-bleed, oversized compressed display type.
- *
- * Phase 2 swaps the still background for a conditionally-loaded video layer;
- * the poster image stays as the base case, so this markup is the fallback that
- * low-end and reduced-motion visitors always get.
- */
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+/** Staggered entrance for the hero stack — plays once, on load, not on scroll. */
+function rise(delay: number) {
+  return {
+    initial: { opacity: 0, y: 26 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.9, delay, ease: EASE },
+  };
+}
+
 export function Hero() {
   const ref = useRef<HTMLDivElement>(null);
+  const reduced = useReducedMotion();
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
-  const y = useTransform(scrollYProgress, [0, 1], [0, 180]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
-  const headline = ["Be Stronger.", "Be Confident.", "Train Your Way."];
+  // Transform/opacity only — no layout properties, so this stays on the
+  // compositor. Travel is capped so it costs almost nothing on a cheap phone.
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.12]);
+  const contentY = useTransform(scrollYProgress, [0, 1], [0, -60]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
 
   return (
-    <section ref={ref} id="top" className="relative min-h-[100svh] w-full overflow-hidden">
-      <motion.div style={{ y }} className="absolute inset-0">
+    <section
+      ref={ref}
+      id="top"
+      className="relative min-h-[100svh] w-full overflow-hidden flex flex-col"
+    >
+      <motion.div
+        style={reduced ? undefined : { y: bgY, scale: bgScale }}
+        className="absolute inset-0 will-change-transform"
+      >
         <Img
           name="hero-gym"
-          alt="3B Karaitivu Fitness Club dark cinematic gym interior, Karaitivu Sri Lanka"
+          alt="Member training at 3B Karaitivu Fitness Club, Karaitivu Sri Lanka"
           sizes="100vw"
           priority
-          className="w-full h-[115%] object-cover"
+          className="h-full w-full object-cover"
         />
-        {/* Warm grade over the still so it sits inside the Six AM palette. */}
-        <div className="absolute inset-0 bg-[oklch(0.145_0.012_45)]/45" />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-background/35 to-background" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/85 via-background/25 to-transparent" />
       </motion.div>
 
+      {/* Cinematic grade: darken, cool the shadows, then fade into the page. */}
+      <div className="absolute inset-0 bg-ink/45" />
+      <div className="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/25 to-ink" />
+      <div className="absolute inset-0 bg-[radial-gradient(120%_80%_at_50%_10%,transparent_35%,oklch(0.145_0.012_225/0.75)_100%)]" />
+
       <motion.div
-        style={{ opacity }}
-        className="relative z-10 max-w-7xl mx-auto px-5 pt-32 sm:pt-40 pb-32 md:pb-24 min-h-[100svh] flex flex-col justify-center"
+        style={reduced ? undefined : { y: contentY, opacity: contentOpacity }}
+        /* flex-1 lets the copy take whatever height is left once the review
+           band has claimed its own, so the hero is exactly one viewport tall at
+           any screen size — no magic padding to keep in sync. */
+        className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-5 pt-20 pb-4"
       >
+        {/* Social proof chip with member avatars */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="inline-flex items-center gap-2.5 self-start rounded-full border border-border bg-card/70 backdrop-blur px-3 py-1.5 pl-2 eyebrow text-muted-foreground mb-6"
+          {...rise(0.35)}
+          className="inline-flex items-center gap-3 glass rounded-full pl-2 pr-4 py-1.5"
         >
-          <Logo priority className="h-6 w-auto object-contain" />
-          <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-          <span>Karaitivu · Ladies &amp; Gents Fitness Club</span>
+          <div className="flex -space-x-2">
+            {reviews.slice(0, 4).map((r) => (
+              <span
+                key={r.avatar}
+                className="h-7 w-7 rounded-full overflow-hidden ring-2 ring-ink/70"
+              >
+                <Img name={r.avatar} alt="" sizes="28px" className="h-full w-full object-cover" />
+              </span>
+            ))}
+          </div>
+          <span className="text-xs sm:text-sm text-foreground/85">
+            <span className="font-medium">500+</span> training with us in {CLUB.locality}
+          </span>
         </motion.div>
 
-        <h1 className="display-tight text-[clamp(2.75rem,11vw,7.5rem)] leading-[0.88] max-w-5xl">
-          {headline.map((line, i) => (
-            <motion.span
-              key={line}
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 + i * 0.15, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className={`block ${i === 2 ? "text-primary" : ""}`}
-            >
-              {line}
-            </motion.span>
-          ))}
+        <h1 className="display mt-7 text-[clamp(2.4rem,6.8vw,5rem)] max-w-5xl">
+          <motion.span {...rise(0.5)} className="block">
+            Train stronger
+          </motion.span>
+          <motion.span {...rise(0.65)} className="block">
+            Train <span className="text-primary">your own way</span>
+          </motion.span>
         </h1>
 
         <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.9 }}
-          className="mt-7 max-w-xl text-base sm:text-lg text-muted-foreground"
+          {...rise(0.85)}
+          className="mt-6 max-w-xl text-base sm:text-lg text-muted-foreground text-balance"
         >
-          Karaitivu's premier fitness club — with fully separate{" "}
-          <span className="text-foreground">Ladies</span> and{" "}
-          <span className="text-foreground">Gents</span> sections, powerful equipment, and
-          personal coaches that show up for you.
+          Karaitivu's fitness club with fully separate Ladies and Gents sections, real equipment,
+          and coaches who show up for you. Open from 6 AM, every day.
         </motion.p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.05 }}
-          className="mt-9 flex flex-wrap items-center gap-3"
-        >
-          <a
-            href={CLUB.phoneHref}
-            className="group inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3.5 font-display font-extrabold uppercase tracking-wide hover:bg-ember-hi transition-colors"
-          >
-            <Phone size={16} /> Call the Club
-          </a>
-          <a
-            href="#zones"
-            className="inline-flex items-center gap-2 rounded-full border border-border bg-card/40 backdrop-blur px-6 py-3.5 font-semibold hover:bg-card/80 transition-colors"
-          >
-            See the Zones <ArrowRight size={16} />
-          </a>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.25 }}
-          className="mt-12 flex flex-wrap items-center gap-3 text-sm"
-        >
-          <div className="flex items-center gap-2.5 rounded-full border border-primary/35 bg-primary/10 backdrop-blur px-4 py-2.5">
-            <Clock size={16} className="text-primary" />
-            <span>
-              <span className="font-semibold">Opens 6 AM</span>{" "}
-              <span className="text-muted-foreground">daily</span>
+        {/* Glass action row — shaped like the reference's input pill, but it dials
+            the club instead of collecting an email. There's no booking flow. */}
+        <motion.div {...rise(1)} className="mt-8 w-full max-w-md">
+          <div className="glass rounded-full p-1.5 flex items-center gap-2">
+            <span className="hidden sm:flex items-center gap-2 pl-4 text-sm text-muted-foreground whitespace-nowrap">
+              <Phone size={14} className="text-primary" />
+              {CLUB.phoneDisplay}
             </span>
+            <a
+              href={CLUB.phoneHref}
+              className="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 font-medium hover:bg-jade-hi transition-colors"
+            >
+              Call the club
+            </a>
           </div>
-          <div className="flex items-center gap-2.5 rounded-full border border-border bg-card/60 backdrop-blur px-4 py-2.5">
-            <Star size={16} className="text-primary fill-primary" />
-            <span>
-              <span className="font-semibold">{CLUB.rating}★</span>{" "}
-              <span className="text-muted-foreground">· {CLUB.reviewCount} reviews</span>
-            </span>
-          </div>
-          <div className="flex items-center gap-2.5 rounded-full border border-lagoon/35 bg-lagoon/10 backdrop-blur px-4 py-2.5">
-            <span className="h-1.5 w-1.5 rounded-full bg-lagoon" />
-            <span className="text-muted-foreground">Private ladies-only zone</span>
-          </div>
+          <a
+            href={CLUB.mapsUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-4 inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <MapPin size={14} /> {CLUB.street}, {CLUB.locality}
+          </a>
         </motion.div>
       </motion.div>
 
-      <a
-        href="#stats"
-        aria-label="Scroll to club details"
-        className="absolute bottom-24 md:bottom-6 left-1/2 -translate-x-1/2 z-10 text-muted-foreground/70"
-      >
-        <ChevronDown size={26} />
-      </a>
+      <HeroReviews />
     </section>
+  );
+}
+
+/**
+ * Review cards sitting over the bottom of the hero photograph. Horizontally
+ * scrollable on small screens rather than stacked, so they stay one band.
+ */
+function HeroReviews() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 1, delay: 1.2, ease: EASE }}
+      /* pb-28 on mobile keeps the cards clear of the fixed tap-to-call bar. */
+      className="relative z-20 shrink-0 pb-28 md:pb-8"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="flex items-center gap-2 mb-3 text-sm text-muted-foreground">
+          <Star size={13} className="text-primary fill-primary" />
+          <span>
+            {CLUB.rating}★ from {CLUB.reviewCount} Google reviews
+          </span>
+        </div>
+        <div className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {reviews.map((review) => (
+            <figure
+              key={review.name}
+              className="glass rounded-2xl p-4 min-w-[250px] sm:min-w-0 sm:flex-1 snap-start"
+            >
+              <div className="flex gap-0.5 mb-2.5">
+                {Array.from({ length: 5 }).map((_, k) => (
+                  <Star
+                    key={k}
+                    size={11}
+                    className={
+                      k < review.stars ? "text-primary fill-primary" : "text-foreground/20"
+                    }
+                  />
+                ))}
+              </div>
+              <blockquote className="text-sm leading-relaxed text-foreground/85 line-clamp-3">
+                "{review.text}"
+              </blockquote>
+              <figcaption className="mt-3.5 flex items-center gap-2.5">
+                <span className="h-8 w-8 rounded-full overflow-hidden shrink-0">
+                  <Img
+                    name={review.avatar}
+                    alt=""
+                    sizes="32px"
+                    className="h-full w-full object-cover"
+                  />
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-sm font-medium truncate">{review.name}</span>
+                  <span className="block text-xs text-muted-foreground truncate">
+                    {review.role}
+                  </span>
+                </span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </motion.div>
   );
 }

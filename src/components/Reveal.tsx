@@ -1,9 +1,12 @@
 import { motion } from "motion/react";
 
 /**
- * Scroll-entrance wrapper. Phase 3 replaces this with a scoped GSAP
- * ScrollTrigger context per section; it stays here so the Phase 1 restructure
- * is a pure move with no behaviour change.
+ * Scroll-entrance wrapper: fade + short rise, once, on enter.
+ *
+ * Deliberately Motion rather than GSAP/ScrollTrigger. Motion is already in the
+ * bundle, this is transform/opacity only, and it uses IntersectionObserver
+ * under the hood — so adding GSAP would cost ~50KB on a 4GB phone to buy
+ * nothing this page actually needs.
  */
 export function Reveal({
   children,

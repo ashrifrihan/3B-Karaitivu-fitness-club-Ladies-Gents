@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Star } from "lucide-react";
+import { Img } from "@/components/Img";
 import { Reveal } from "@/components/Reveal";
 import { CLUB, reviews } from "@/lib/club";
 
@@ -8,9 +9,9 @@ import { CLUB, reviews } from "@/lib/club";
  *
  * The previous version drove this with Motion's `animate={{ x: [...] }}` and
  * `repeat: Infinity`, which kept a rAF loop and compositor work alive for the
- * whole session even with the section far off screen — the exact thing our own
- * perf rule forbids. Now it's a CSS transform animation that an
- * IntersectionObserver play/pauses, plus a hard stop for reduced-motion.
+ * whole session even with the section far off screen. Now it's a CSS transform
+ * animation an IntersectionObserver play/pauses, with a hard stop for
+ * reduced-motion (where it becomes a plain scrollable row).
  */
 export default function Testimonials() {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -44,51 +45,66 @@ export default function Testimonials() {
     <section
       ref={sectionRef}
       id="reviews"
-      className="border-y border-border bg-card/40 py-act-open overflow-hidden"
+      className="border-y border-white/8 bg-ink-2/40 py-act overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto px-5">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6">
         <Reveal>
-          <div className="mb-11 max-w-3xl">
-            <div className="eyebrow text-primary mb-4">Members say</div>
-            <h2 className="display-tight text-[clamp(2rem,6vw,4rem)] leading-[0.95]">
+          <div className="max-w-3xl">
+            <div className="eyebrow text-primary mb-5">Members say</div>
+            <h2 className="display text-[clamp(2rem,5.5vw,3.75rem)]">
               Rated {CLUB.rating}★ by {CLUB.reviewCount} Google reviewers.
             </h2>
           </div>
         </Reveal>
+      </div>
 
-        <div className="relative">
-          <div
-            ref={trackRef}
-            className={
-              reducedMotion
-                ? "flex gap-4 overflow-x-auto pb-2 [scrollbar-width:none]"
-                : "flex gap-4 w-max animate-[marquee_44s_linear_infinite] [animation-play-state:paused] motion-reduce:animate-none"
-            }
-          >
-            {(reducedMotion ? reviews : [...reviews, ...reviews]).map((review, i) => (
-              <figure
-                key={i}
-                className="min-w-[280px] sm:min-w-[360px] rounded-3xl border border-border bg-background p-6"
-              >
-                <div className="flex gap-0.5 mb-3">
-                  {Array.from({ length: 5 }).map((_, k) => (
-                    <Star
-                      key={k}
-                      size={13}
-                      className={
-                        k < review.stars ? "text-primary fill-primary" : "text-muted-foreground/35"
-                      }
-                    />
-                  ))}
-                </div>
-                <blockquote className="text-sm leading-relaxed">"{review.text}"</blockquote>
-                <figcaption className="mt-4 text-sm font-semibold">{review.name}</figcaption>
-              </figure>
-            ))}
-          </div>
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-card to-transparent" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-card to-transparent" />
+      <div className="relative mt-12">
+        <div
+          ref={trackRef}
+          className={
+            reducedMotion
+              ? "flex gap-3 px-5 overflow-x-auto pb-2 [scrollbar-width:none]"
+              : "flex gap-3 w-max animate-[marquee_46s_linear_infinite] [animation-play-state:paused]"
+          }
+        >
+          {(reducedMotion ? reviews : [...reviews, ...reviews]).map((review, i) => (
+            <figure
+              key={i}
+              className="min-w-[280px] sm:min-w-[380px] rounded-3xl border border-white/8 bg-ink p-6"
+            >
+              <div className="flex gap-0.5 mb-3.5">
+                {Array.from({ length: 5 }).map((_, k) => (
+                  <Star
+                    key={k}
+                    size={12}
+                    className={
+                      k < review.stars ? "text-primary fill-primary" : "text-foreground/20"
+                    }
+                  />
+                ))}
+              </div>
+              <blockquote className="text-sm leading-relaxed text-foreground/85">
+                "{review.text}"
+              </blockquote>
+              <figcaption className="mt-5 flex items-center gap-3">
+                <span className="h-9 w-9 rounded-full overflow-hidden shrink-0">
+                  <Img
+                    name={review.avatar}
+                    alt=""
+                    sizes="36px"
+                    className="h-full w-full object-cover"
+                  />
+                </span>
+                <span>
+                  <span className="block text-sm font-medium">{review.name}</span>
+                  <span className="block text-xs text-muted-foreground">{review.role}</span>
+                </span>
+              </figcaption>
+            </figure>
+          ))}
         </div>
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-ink to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-ink to-transparent" />
       </div>
     </section>
   );

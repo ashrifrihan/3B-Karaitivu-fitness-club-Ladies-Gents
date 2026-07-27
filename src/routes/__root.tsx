@@ -78,10 +78,22 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "3B Karaitivu Fitness Club | Best Gym in Karaitivu, Sri Lanka — Ladies & Gents" },
-      { name: "description", content: "Karaitivu's premier fitness club with separate Ladies-only and Gents sections. Personal training, cardio, strength. Open 6 AM daily. Call 0672 050 465." },
-      { name: "keywords", content: "gym in Karaitivu, ladies gym Karaitivu, gents gym Sri Lanka, personal trainer Sri Lanka, 3B fitness club" },
+      {
+        name: "description",
+        content:
+          "Karaitivu's premier fitness club with separate Ladies-only and Gents sections. Personal training, cardio, strength. Open 6 AM daily. Call 0672 050 465.",
+      },
+      {
+        name: "keywords",
+        content:
+          "gym in Karaitivu, ladies gym Karaitivu, gents gym Sri Lanka, personal trainer Sri Lanka, 3B fitness club",
+      },
       { property: "og:title", content: "3B Karaitivu Fitness Club — Ladies & Gents" },
-      { property: "og:description", content: "Karaitivu's premier fitness club. Separate Ladies & Gents sections. Open 6 AM daily." },
+      {
+        property: "og:description",
+        content:
+          "Karaitivu's premier fitness club. Separate Ladies & Gents sections. Open 6 AM daily.",
+      },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "3B Karaitivu Fitness Club" },
       { property: "og:image", content: "/logo.png" },
@@ -95,15 +107,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { rel: "icon", href: "/logo.png", type: "image/png" },
       { rel: "apple-touch-icon", href: "/logo.png" },
-      // Fonts are self-hosted variable woff2 (latin subset) declared in
-      // styles.css — no third-party preconnect or render-blocking stylesheet.
-      {
-        rel: "preload",
-        href: "/fonts/archivo-latin-var.woff2",
-        as: "font",
-        type: "font/woff2",
-        crossOrigin: "anonymous",
-      },
+      // One self-hosted variable woff2 (latin subset), declared in styles.css —
+      // no third-party preconnect or render-blocking stylesheet.
       {
         rel: "preload",
         href: "/fonts/inter-tight-latin-var.woff2",

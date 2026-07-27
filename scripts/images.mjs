@@ -12,7 +12,8 @@ import path from "node:path";
 import sharp from "sharp";
 
 const DIR = "src/assets";
-const WIDTHS = [480, 768, 1280, 1920];
+// Small sizes exist for avatars and the logo mark, which render at 28-48px.
+const WIDTHS = [128, 256, 480, 768, 1280, 1920];
 const QUALITY = 78;
 
 const files = (await readdir(DIR)).filter((f) => /\.(jpe?g|png)$/i.test(f));
@@ -51,10 +52,7 @@ for (const file of files) {
   console.log(`${file} (${meta.width}x${meta.height}) -> ${emitted.join(", ")}`);
 }
 
-await writeFile(
-  path.join(DIR, "images.json"),
-  JSON.stringify(manifest, null, 2) + "\n",
-);
+await writeFile(path.join(DIR, "images.json"), JSON.stringify(manifest, null, 2) + "\n");
 
 console.log(
   `\n${files.length} sources ${(totalIn / 1024).toFixed(0)}KB -> ` +

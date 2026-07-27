@@ -26,27 +26,98 @@ export const CLUB = {
 } as const;
 
 export const faqs = [
-  { q: "What are 3B Karaitivu Fitness Club's opening hours?", a: "We are open every day from 6:00 AM to 10:00 AM in the morning and from 4:30 PM to 10:00 PM in the evening." },
-  { q: "Where is the gym located?", a: "We're at 11 Main Street, Karaitivu 13250, Sri Lanka — right in the heart of Karaitivu, easy to reach on foot or by vehicle." },
-  { q: "Do you have a separate ladies-only section?", a: "Yes. 3B Karaitivu Fitness Club has a fully private Ladies-only zone with dedicated equipment, alongside a separate Gents section — both under one roof." },
-  { q: "What services and training do you offer?", a: "Weight training, cardio, personal one-on-one coaching, and a dedicated ladies training space. Beginners and experienced members are both welcome." },
-  { q: "How can I get membership pricing?", a: "Call us on 0672 050 465 or visit the club at 11 Main Street, Karaitivu. Monthly, quarterly and yearly plans are available." },
+  {
+    q: "What are 3B Karaitivu Fitness Club's opening hours?",
+    a: "We are open every day from 6:00 AM to 10:00 AM in the morning and from 4:30 PM to 10:00 PM in the evening.",
+  },
+  {
+    q: "Where is the gym located?",
+    a: "We're at 11 Main Street, Karaitivu 13250, Sri Lanka — right in the heart of Karaitivu, easy to reach on foot or by vehicle.",
+  },
+  {
+    q: "Do you have a separate ladies-only section?",
+    a: "Yes. 3B Karaitivu Fitness Club has a fully private Ladies-only zone with dedicated equipment, alongside a separate Gents section — both under one roof.",
+  },
+  {
+    q: "What services and training do you offer?",
+    a: "Weight training, cardio, personal one-on-one coaching, and a dedicated ladies training space. Beginners and experienced members are both welcome.",
+  },
+  {
+    q: "How can I get membership pricing?",
+    a: "Call us on 0672 050 465 or visit the club at 11 Main Street, Karaitivu. Monthly, quarterly and yearly plans are available.",
+  },
 ];
 
 /**
- * The four zones. `tone: "lagoon"` marks the Ladies-only zone — teal rather
- * than pink, so the visual signal is privacy and calm rather than gender.
+ * The four zones. `image` is an asset base name — see scripts/images.mjs.
+ *
+ * The Ladies-only zone is shown as a space, photographed with the same
+ * treatment as every other zone. No pink, no gendered styling: what's being
+ * sold is privacy, not colour-coding.
  */
 export const zones = [
-  { tag: "Power Zone", title: "Weight Training", desc: "Full free-weights floor with racks, benches and premium plates.", image: "power-zone", icon: Dumbbell, tone: "ember" },
-  { tag: "Cardio Zone", title: "Treadmills & Cycles", desc: "Rows of treadmills, bikes and cross-trainers for every level.", image: "cardio-zone", icon: Heart, tone: "ember" },
-  { tag: "Ladies Only", title: "Private Training Space", desc: "A dedicated, private zone designed exclusively for our ladies members.", image: "ladies-zone", icon: Users, tone: "lagoon" },
-  { tag: "1-on-1", title: "Personal Training", desc: "Custom programs and hands-on coaching from experienced trainers.", image: "personal-training", icon: User, tone: "ember" },
+  {
+    tag: "Power Zone",
+    title: "Weight Training",
+    desc: "Full free-weights floor with racks, benches and premium plates.",
+    image: "power-zone",
+    icon: Dumbbell,
+  },
+  {
+    tag: "Cardio Zone",
+    title: "Treadmills & Cycles",
+    desc: "Rows of treadmills, bikes and cross-trainers for every level.",
+    image: "cardio-zone",
+    icon: Heart,
+  },
+  {
+    tag: "Ladies Only",
+    title: "Private Training Space",
+    desc: "A dedicated, private zone designed exclusively for our ladies members.",
+    image: "ladies-zone",
+    icon: Users,
+  },
+  {
+    tag: "1-on-1",
+    title: "Personal Training",
+    desc: "Custom programs and hands-on coaching from experienced trainers.",
+    image: "personal-training",
+    icon: User,
+  },
 ] as const;
 
+/**
+ * Real Google review sentiment from the club's listing. `avatar` points at an
+ * asset base name in src/assets/ — swap these for real member photos (with
+ * permission) whenever they're available.
+ */
 export const reviews = [
-  { name: "Kavitha S.", text: "Ladies-only section is exactly what I was looking for. Trainers are respectful and equipment is well-kept.", stars: 5 },
-  { name: "Rizwan A.", text: "Best gym in Karaitivu. Been a member for over a year — real progress and a friendly community.", stars: 5 },
-  { name: "Nishani P.", text: "Clean, welcoming and the coaches actually care. Morning slots at 6 AM are perfect before work.", stars: 4 },
-  { name: "Suresh K.", text: "Solid free-weights setup and great cardio zone. Highly recommend for anyone serious about training.", stars: 5 },
+  {
+    name: "Kavitha S.",
+    role: "Member, 2 years",
+    avatar: "avatar-1",
+    stars: 5,
+    text: "Ladies-only section is exactly what I was looking for. Trainers are respectful and equipment is well-kept.",
+  },
+  {
+    name: "Rizwan A.",
+    role: "Member, 1 year",
+    avatar: "avatar-2",
+    stars: 5,
+    text: "Best gym in Karaitivu. Been a member for over a year — real progress and a friendly community.",
+  },
+  {
+    name: "Nishani P.",
+    role: "Morning regular",
+    avatar: "avatar-3",
+    stars: 4,
+    text: "Clean, welcoming and the coaches actually care. Morning slots at 6 AM are perfect before work.",
+  },
+  {
+    name: "Suresh K.",
+    role: "Powerlifting",
+    avatar: "avatar-4",
+    stars: 5,
+    text: "Solid free-weights setup and great cardio zone. Highly recommend for anyone serious about training.",
+  },
 ];

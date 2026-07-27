@@ -5,21 +5,12 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Self-hosted variable fonts, latin subset (the files Google serves for the
- * latin unicode-range). Preloaded in __root.tsx — no third-party round trip.
+ * One self-hosted variable font, latin subset (the file Google serves for the
+ * latin unicode-range), preloaded in __root.tsx — no third-party round trip.
  *
- * Archivo carries a width axis (62%-125%), which is what lets display type
- * compress on narrow screens instead of shrinking. See --font-display usage.
+ * Display type is the same family at weight 300 and large sizes rather than a
+ * second heavy face: quieter, more cinematic, and 88KB lighter.
  */
-@font-face {
-  font-family: "Archivo";
-  src: url("/fonts/archivo-latin-var.woff2") format("woff2-variations");
-  font-weight: 400 900;
-  font-stretch: 62% 125%;
-  font-style: normal;
-  font-display: swap;
-}
-
 @font-face {
   font-family: "Inter Tight";
   src: url("/fonts/inter-tight-latin-var.woff2") format("woff2-variations");
@@ -83,56 +74,54 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  --color-ember: var(--ember);
-  --color-ember-hi: var(--ember-hi);
-  --color-lagoon: var(--lagoon);
-  --color-lagoon-deep: var(--lagoon-deep);
+  --color-jade: var(--jade);
+  --color-jade-hi: var(--jade-hi);
+  --color-jade-deep: var(--jade-deep);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
   --color-ink-3: var(--ink-3);
-  --font-display: "Archivo", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
-  /* Act rhythm: tight (Act II, dense) / normal / open (Act I + III, calm) */
-  --spacing-act-tight: 4rem;
-  --spacing-act: 6rem;
-  --spacing-act-open: 9rem;
+  --spacing-act-tight: 5rem;
+  --spacing-act: 7.5rem;
+  --spacing-act-open: 10rem;
 }
 
 :root {
   --radius: 0.875rem;
   /*
-   * "Six AM" — the gym at 6am, sodium lights, before the town wakes up.
-   * Warm dark rather than blue dark. Ember (amber) carries all emphasis;
-   * lagoon (teal) is the calm counterweight and the Ladies-zone treatment.
+   * Cinematic dark: near-black cool ink base so photography carries the page,
+   * with a single jade green accent doing all the emphasis. Green rather than
+   * the old acid #73fb50 — same family, far less shouty.
    */
-  --ink: oklch(0.145 0.012 45);
-  --ink-2: oklch(0.19 0.014 45);
-  --ink-3: oklch(0.24 0.016 45);
-  --ember: oklch(0.76 0.165 62);
-  --ember-hi: oklch(0.84 0.14 72);
-  --lagoon: oklch(0.6 0.085 205);
-  --lagoon-deep: oklch(0.42 0.075 210);
+  --ink: oklch(0.145 0.012 225);
+  --ink-2: oklch(0.195 0.016 225);
+  --ink-3: oklch(0.25 0.018 225);
+  --jade: oklch(0.8 0.155 158);
+  --jade-hi: oklch(0.88 0.13 160);
+  --jade-deep: oklch(0.52 0.12 158);
 
   --background: var(--ink);
-  --foreground: oklch(0.965 0.008 80);
+  --foreground: oklch(0.975 0.004 220);
   --card: var(--ink-2);
-  --card-foreground: oklch(0.965 0.008 80);
+  --card-foreground: oklch(0.975 0.004 220);
   --popover: var(--ink-2);
-  --popover-foreground: oklch(0.965 0.008 80);
-  --primary: var(--ember);
-  --primary-foreground: oklch(0.145 0.012 45);
-  --primary-glow: var(--ember-hi);
+  --popover-foreground: oklch(0.975 0.004 220);
+  --primary: var(--jade);
+  --primary-foreground: oklch(0.145 0.012 225);
+  --primary-glow: var(--jade-hi);
   --secondary: var(--ink-3);
-  --secondary-foreground: oklch(0.965 0.008 80);
+  --secondary-foreground: oklch(0.975 0.004 220);
   --muted: var(--ink-3);
-  --muted-foreground: oklch(0.72 0.015 70);
-  --accent: var(--lagoon);
-  --accent-foreground: oklch(0.145 0.012 45);
+  --muted-foreground: oklch(0.74 0.012 225);
+  --accent: var(--jade);
+  --accent-foreground: oklch(0.145 0.012 225);
   --destructive: oklch(0.62 0.2 28);
-  --destructive-foreground: oklch(0.965 0.008 80);
-  --border: oklch(0.32 0.014 45);
-  --input: oklch(0.26 0.014 45);
-  --ring: var(--ember);
-  --gradient-hero: linear-gradient(135deg, oklch(0.145 0.012 45) 0%, oklch(0.11 0.01 45) 100%);
-  --shadow-glow: 0 0 40px oklch(0.76 0.165 62 / 0.3), 0 0 80px oklch(0.76 0.165 62 / 0.14);
+  --destructive-foreground: oklch(0.975 0.004 220);
+  --border: oklch(0.32 0.016 225);
+  --input: oklch(0.26 0.016 225);
+  --ring: var(--jade);
+  --gradient-hero: linear-gradient(135deg, oklch(0.145 0.012 225) 0%, oklch(0.11 0.01 225) 100%);
+  --shadow-glow: 0 0 40px oklch(0.8 0.155 158 / 0.28), 0 0 90px oklch(0.8 0.155 158 / 0.12);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -151,8 +140,8 @@
 /*
  * This site is dark-only — :root above *is* the dark theme. The stock shadcn
  * `.dark` override block was removed: it still held the blue-charcoal defaults
- * and would have clobbered the Six AM palette if `class="dark"` ever landed on
- * an ancestor.
+ * and would have clobbered the palette if `class="dark"` ever landed on an
+ * ancestor.
  */
 
 @layer base {
@@ -171,33 +160,62 @@
    * No `scroll-behavior: smooth` — it fights ScrollTrigger's scroll position
    * reads and makes anchor jumps animate twice. Anchor links are instant.
    */
-
-  h1, h2, h3, h4 {
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-stretch: 112%;
-    letter-spacing: -0.02em;
-    text-transform: uppercase;
-  }
 }
 
-@utility display-tight {
-  /* Narrow viewports compress the width axis instead of dropping font-size,
-     so headlines stay physically large on a 375px screen. */
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-stretch: 88%;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
+/*
+ * Display type: same family, weight 300, large, mixed case, optically tightened.
+ * The weight is what makes it feel cinematic rather than shouty — emphasis comes
+ * from scale and the jade accent, not from bolding.
+ */
+@utility display {
+  font-weight: 300;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+  text-wrap: balance;
 }
 
 @utility eyebrow {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-stretch: 100%;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
-  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  font-size: 0.6875rem;
+}
+
+/*
+ * Frosted surface used by the floating nav, hero chips and review cards.
+ * backdrop-filter is expensive, so it is only applied on pointer-capable /
+ * wider viewports; small screens fall back to a flat translucent fill.
+ */
+@utility glass {
+  background-color: oklch(0.195 0.016 225 / 0.72);
+  border: 1px solid oklch(1 0 0 / 0.1);
+}
+
+@media (min-width: 768px) {
+  .glass {
+    background-color: oklch(0.195 0.016 225 / 0.42);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+  }
+}
+
+/*
+ * Liquid Glass utility with glossy specular highlights & subtle depth.
+ */
+@utility liquid-glass {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(255, 255, 255, 0.03) 100%
+  ), oklch(0.18 0.016 225 / 0.65);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -1px 2px 0 rgba(0, 0, 0, 0.5),
+    0 12px 32px -8px rgba(0, 0, 0, 0.6),
+    0 0 24px rgba(120, 240, 180, 0.08);
 }
 
 @theme inline {
@@ -211,12 +229,18 @@
  * played/paused by IntersectionObserver in Testimonials.tsx.
  */
 @keyframes marquee {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(-50%, 0, 0); }
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

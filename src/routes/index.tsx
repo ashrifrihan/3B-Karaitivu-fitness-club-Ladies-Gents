@@ -62,13 +62,8 @@ function SectionFallback() {
 }
 
 /**
- * Three acts, not nine equal beats:
- *
- *   I   Arrive — Hero, open rhythm
- *   II  Proof  — Stats / About / Zones on the tight rhythm, read as one dense
- *                band, then ActBreak full-bleed to break the run of cards
- *   III Decide — Gallery / Reviews / Membership / FAQ / Visit, open and calm
- *                because this is where people pick up the phone
+ * Cinematic hero carries the page; everything after it is calm and evenly
+ * spaced, with one full-bleed image break to stop the run of cards.
  */
 function Index() {
   return (

@@ -1,84 +1,95 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Phone, X, Menu, ArrowRight } from "lucide-react";
+import { Phone, X, Menu } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { CLUB } from "@/lib/club";
 
 const links = [
+  ["Home", "#top"],
   ["Zones", "#zones"],
   ["Gallery", "#gallery"],
   ["Reviews", "#reviews"],
-  ["Membership", "#membership"],
   ["FAQ", "#faq"],
-  ["Visit", "#contact"],
 ];
 
+/**
+ * Floating glass nav: logo left, centred pill of links, phone right.
+ *
+ * The pill is a fixed overlay rather than a full-width bar so the hero
+ * photograph reads edge to edge behind it.
+ */
 export function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Lock body scroll while the mobile sheet is open.
+  useEffect(() => {
+    if (!open) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [open]);
 
   return (
     <motion.header
-      initial={{ y: -60, opacity: 0 }}
+      initial={{ y: -24, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6 }}
-      className={`fixed top-0 inset-x-0 z-50 transition-colors duration-300 ${
+      transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-background/85 backdrop-blur-xl border-b border-border py-3"
-          : "bg-transparent py-5"
+          ? "liquid-glass py-3"
+          : "liquid-glass-subtle py-4 sm:py-5"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-5 flex items-center justify-between gap-3">
-        <a href="#top" className="flex items-center gap-2.5 shrink-0">
-          <Logo priority className="h-9 sm:h-11 w-auto object-contain" />
-          <span className="hidden sm:flex flex-col leading-none">
-            <span className="font-display font-extrabold text-base tracking-tight uppercase">
-              3B Karaitivu
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between gap-4">
+        <a href="#top" className="flex items-center gap-3 shrink-0 group">
+          <Logo priority className="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
+          <span className="flex flex-col leading-tight">
+            <span className="text-sm sm:text-base font-bold tracking-tight text-foreground">3B Karaitivu</span>
+            <span className="text-[10px] tracking-[0.18em] uppercase text-primary font-semibold">
+              Fitness Club
             </span>
-            <span className="eyebrow text-primary mt-0.5">Fitness Club</span>
           </span>
         </a>
 
-        <nav className="hidden md:flex items-center gap-7 text-sm text-muted-foreground">
+        <nav className="hidden md:flex items-center gap-1 liquid-glass-subtle rounded-full px-2.5 py-1.5">
           {links.map(([label, href]) => (
-            <a key={href} href={href} className="hover:text-foreground transition-colors">
+            <a
+              key={href}
+              href={href}
+              className="rounded-full px-4 py-1.5 text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-white/10 transition-all"
+            >
               {label}
             </a>
           ))}
         </nav>
 
         <div className="flex items-center gap-2">
-          {/*
-            Always visible, every breakpoint. This is a walk-in local gym and
-            mobile is most of the traffic — the phone number is the product.
-          */}
+          {/* Visible at every breakpoint — for a walk-in gym the number is the product. */}
           <a
             href={CLUB.phoneHref}
-            className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-3 py-2 text-xs sm:text-sm font-semibold text-primary hover:bg-primary/20 transition-colors"
+            className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-4 py-2.5 text-sm font-semibold hover:bg-jade-hi transition-all shadow-[var(--shadow-glow)]"
           >
             <Phone size={14} className="shrink-0" />
             <span className="whitespace-nowrap">{CLUB.phoneDisplay}</span>
           </a>
-          <a
-            href="#membership"
-            className="hidden lg:inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-4 py-2 text-sm font-semibold hover:bg-ember-hi transition-colors"
-          >
-            Join Now <ArrowRight size={14} />
-          </a>
           <button
-            onClick={() => setOpen(!open)}
-            className="md:hidden p-2 text-foreground"
-            aria-label={open ? "Close menu" : "Open menu"}
-            aria-expanded={open}
+            onClick={() => setOpen(true)}
+            className="md:hidden grid place-items-center h-10 w-10 rounded-full liquid-glass-subtle text-foreground"
+            aria-label="Open menu"
           >
-            {open ? <X size={22} /> : <Menu size={22} />}
+            <Menu size={18} />
           </button>
         </div>
       </div>
@@ -89,27 +100,46 @@ export function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.18 }}
-            className="md:hidden bg-background/97 backdrop-blur-xl border-t border-border"
+            transition={{ duration: 0.2 }}
+            className="md:hidden fixed inset-0 z-50 bg-ink/95"
           >
-            <div className="px-5 py-4 flex flex-col">
-              <div className="flex items-center gap-3 pb-4 mb-1 border-b border-border">
-                <Logo className="h-8 w-auto object-contain" />
-                <span className="font-display font-extrabold uppercase text-sm">
-                  3B Karaitivu Fitness Club
+            <div className="flex items-center justify-between px-4 pt-4">
+              <div className="flex items-center gap-2.5">
+                <Logo className="h-10 w-auto object-contain" />
+                <span className="flex flex-col leading-tight">
+                  <span className="text-sm font-bold tracking-tight text-foreground">3B Karaitivu</span>
+                  <span className="text-[9px] tracking-[0.18em] uppercase text-primary font-semibold">Fitness Club</span>
                 </span>
               </div>
-              {links.map(([label, href]) => (
-                <a
+              <button
+                onClick={() => setOpen(false)}
+                className="grid place-items-center h-10 w-10 rounded-full glass"
+                aria-label="Close menu"
+              >
+                <X size={18} />
+              </button>
+            </div>
+            <nav className="px-6 pt-12 flex flex-col gap-1">
+              {links.map(([label, href], i) => (
+                <motion.a
                   key={href}
                   href={href}
                   onClick={() => setOpen(false)}
-                  className="py-3 border-b border-border/60 last:border-0 font-display font-semibold uppercase tracking-wide text-foreground/90"
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.05 + i * 0.04, duration: 0.3 }}
+                  className="display text-4xl py-3 border-b border-white/8"
                 >
                   {label}
-                </a>
+                </motion.a>
               ))}
-            </div>
+              <a
+                href={CLUB.phoneHref}
+                className="mt-10 inline-flex items-center justify-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-4 font-medium"
+              >
+                <Phone size={16} /> Call {CLUB.phoneDisplay}
+              </a>
+            </nav>
           </motion.div>
         )}
       </AnimatePresence>
@@ -117,17 +147,14 @@ export function Navbar() {
   );
 }
 
-/**
- * Sticky tap-to-call bar, mobile only. Sits above the fold-independent bottom
- * edge so the primary action is reachable from anywhere on the page.
- */
+/** Sticky tap-to-call bar, mobile only. */
 export function CallBar() {
   return (
-    <div className="md:hidden fixed bottom-0 inset-x-0 z-40 border-t border-border bg-background/95 backdrop-blur-xl">
+    <div className="md:hidden fixed bottom-0 inset-x-0 z-40 border-t border-white/8 bg-ink/95 backdrop-blur-xl">
       <div className="flex items-stretch gap-2 p-2.5">
         <a
           href={CLUB.phoneHref}
-          className="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-primary text-primary-foreground px-4 py-3 font-display font-extrabold uppercase tracking-wide text-sm"
+          className="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-primary text-primary-foreground px-4 py-3 font-medium text-sm"
         >
           <Phone size={16} /> Call {CLUB.phoneDisplay}
         </a>
@@ -135,7 +162,7 @@ export function CallBar() {
           href={CLUB.mapsUrl}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex items-center justify-center rounded-full border border-border px-4 py-3 text-sm font-semibold text-foreground"
+          className="inline-flex items-center justify-center rounded-full glass px-5 py-3 text-sm"
         >
           Directions
         </a>

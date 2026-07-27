@@ -10,8 +10,16 @@ const items = [
   { label: "Sections — ladies & gents", value: 2, suffix: "", icon: Users },
 ];
 
-/** Phase 3 moves this trigger from useInView to ScrollTrigger. */
-function Counter({ to, suffix = "", decimals = 0 }: { to: number; suffix?: string; decimals?: number }) {
+/** Counts up once, the first time it scrolls into view. */
+function Counter({
+  to,
+  suffix = "",
+  decimals = 0,
+}: {
+  to: number;
+  suffix?: string;
+  decimals?: number;
+}) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const [n, setN] = useState(0);
@@ -44,12 +52,12 @@ function Counter({ to, suffix = "", decimals = 0 }: { to: number; suffix?: strin
  */
 export function StatsCounters() {
   return (
-    <section id="stats" className="border-y border-border bg-card/40">
-      <div className="max-w-7xl mx-auto px-5 py-10 grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-8">
+    <section id="stats" className="border-y border-white/8 bg-ink-2/40">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 py-12 grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-9">
         {items.map((it) => (
-          <div key={it.label} className="flex flex-col gap-1">
+          <div key={it.label} className="flex flex-col gap-1.5">
             <it.icon size={16} className="text-primary" />
-            <div className="font-display font-extrabold text-3xl sm:text-4xl tracking-tight">
+            <div className="display text-3xl sm:text-4xl">
               <Counter to={it.value} suffix={it.suffix} decimals={it.decimals ?? 0} />
             </div>
             <div className="text-xs sm:text-sm text-muted-foreground">{it.label}</div>

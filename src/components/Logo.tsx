@@ -10,7 +10,7 @@ export function Logo({ className, priority = false }: { className?: string; prio
     <Img
       name="logo"
       alt="3B Karaitivu Fitness Club logo"
-      sizes="120px"
+      sizes="300px"
       priority={priority}
       className={className}
     />
