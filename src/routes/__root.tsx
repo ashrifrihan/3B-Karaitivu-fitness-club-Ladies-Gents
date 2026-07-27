@@ -77,7 +77,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "3B Karaitivu Fitness Club | Best Gym in Karaitivu, Sri Lanka — Ladies & Gents" },
+      { title: "3B Karaitivu Fitness Club | Best Gym in Karaitivu, Sri Lanka | Ladies & Gents" },
       {
         name: "description",
         content:
@@ -88,7 +88,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "gym in Karaitivu, ladies gym Karaitivu, gents gym Sri Lanka, personal trainer Sri Lanka, 3B fitness club",
       },
-      { property: "og:title", content: "3B Karaitivu Fitness Club — Ladies & Gents" },
+      { property: "og:title", content: "3B Karaitivu Fitness Club | Ladies & Gents" },
       {
         property: "og:description",
         content:

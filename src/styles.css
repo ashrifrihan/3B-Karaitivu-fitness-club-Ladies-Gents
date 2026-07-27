@@ -199,25 +199,6 @@
   }
 }
 
-/*
- * Liquid Glass utility with glossy specular highlights & subtle depth.
- */
-@utility liquid-glass {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.14) 0%,
-    rgba(255, 255, 255, 0.03) 100%
-  ), oklch(0.18 0.016 225 / 0.65);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow:
-    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.35),
-    inset 0 -1px 2px 0 rgba(0, 0, 0, 0.5),
-    0 12px 32px -8px rgba(0, 0, 0, 0.6),
-    0 0 24px rgba(120, 240, 180, 0.08);
-}
-
 @theme inline {
   --shadow-glow: var(--shadow-glow);
   --color-primary-glow: var(--primary-glow);

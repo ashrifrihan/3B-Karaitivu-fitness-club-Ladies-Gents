@@ -20,16 +20,6 @@ const links = [
  */
 export function Navbar() {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   // Lock body scroll while the mobile sheet is open.
   useEffect(() => {
@@ -46,13 +36,9 @@ export function Navbar() {
       initial={{ y: -24, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "liquid-glass py-3"
-          : "liquid-glass-subtle py-4 sm:py-5"
-      }`}
+      className="fixed top-0 inset-x-0 z-50"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-4 sm:pt-6 flex items-center justify-between gap-4">
         <a href="#top" className="flex items-center gap-3 shrink-0 group">
           <Logo priority className="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
           <span className="flex flex-col leading-tight">
@@ -63,12 +49,12 @@ export function Navbar() {
           </span>
         </a>
 
-        <nav className="hidden md:flex items-center gap-1 liquid-glass-subtle rounded-full px-2.5 py-1.5">
+        <nav className="hidden md:flex items-center gap-1 glass rounded-full px-2 py-1.5">
           {links.map(([label, href]) => (
             <a
               key={href}
               href={href}
-              className="rounded-full px-4 py-1.5 text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-white/10 transition-all"
+              className="rounded-full px-4 py-2 text-sm text-foreground/75 hover:text-foreground hover:bg-white/5 transition-colors"
             >
               {label}
             </a>
@@ -79,14 +65,14 @@ export function Navbar() {
           {/* Visible at every breakpoint — for a walk-in gym the number is the product. */}
           <a
             href={CLUB.phoneHref}
-            className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-4 py-2.5 text-sm font-semibold hover:bg-jade-hi transition-all shadow-[var(--shadow-glow)]"
+            className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-4 py-2.5 text-sm font-medium hover:bg-jade-hi transition-colors"
           >
             <Phone size={14} className="shrink-0" />
             <span className="whitespace-nowrap">{CLUB.phoneDisplay}</span>
           </a>
           <button
             onClick={() => setOpen(true)}
-            className="md:hidden grid place-items-center h-10 w-10 rounded-full liquid-glass-subtle text-foreground"
+            className="md:hidden grid place-items-center h-10 w-10 rounded-full glass text-foreground"
             aria-label="Open menu"
           >
             <Menu size={18} />

@@ -23,10 +23,10 @@ export function About() {
             <p className="mt-7 text-lg text-muted-foreground leading-relaxed">
               3B Karaitivu Fitness Club is a premier gym at 11 Main Street, Karaitivu (13250), Sri
               Lanka, offering separate Ladies-only and Gents training zones, personal coaching,
-              weight and cardio equipment — open daily from 6 AM to 10 AM and 4:30 PM to 10 PM.
+              weight and cardio equipment, open daily from 6 AM to 10 AM and 4:30 PM to 10 PM.
             </p>
             <p className="mt-4 text-muted-foreground leading-relaxed">
-              We built this club so every member — women and men — can train in a space that
+              We built this club so every member, women and men, can train in a space that
               respects their comfort and pushes their limits. Modern equipment, real coaches, and a
               community that shows up for each other, every session.
             </p>

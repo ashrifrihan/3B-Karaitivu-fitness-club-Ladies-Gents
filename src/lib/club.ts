@@ -12,11 +12,16 @@ export const CLUB = {
   shortName: "Karaitivu Fitness",
   phoneDisplay: "0672 050 465",
   phoneHref: "tel:+94672050465",
+  email: "threebfitnessclub@hotmail.com",
+  emailHref: "mailto:threebfitnessclub@hotmail.com",
   street: "11 Main Street",
   locality: "Karaitivu",
   postalCode: "13250",
   country: "Sri Lanka",
-  mapsUrl: "https://maps.google.com/?q=11+Main+Street+Karaitivu",
+  mapsUrl: "https://maps.app.goo.gl/ojZeovp1SpyDEEfFA",
+  facebookUrl: "https://www.facebook.com/profile.php?id=100075527632629",
+  embedMapUrl:
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3956.8479924122353!2d81.8415538!3d7.370928999999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae53fc180a2b705%3A0x94f250c5aa782fd!2s3B%20Karaitivu%20fitness%20club%20Ladies%20%26%20Gents!5e0!3m2!1sen!2slk!4v1785130682449!5m2!1sen!2slk",
   rating: "4.4",
   reviewCount: "74",
   hours: {
@@ -32,11 +37,11 @@ export const faqs = [
   },
   {
     q: "Where is the gym located?",
-    a: "We're at 11 Main Street, Karaitivu 13250, Sri Lanka — right in the heart of Karaitivu, easy to reach on foot or by vehicle.",
+    a: "We're at 11 Main Street, Karaitivu 13250, Sri Lanka, right in the heart of Karaitivu, easy to reach on foot or by vehicle.",
   },
   {
     q: "Do you have a separate ladies-only section?",
-    a: "Yes. 3B Karaitivu Fitness Club has a fully private Ladies-only zone with dedicated equipment, alongside a separate Gents section — both under one roof.",
+    a: "Yes. 3B Karaitivu Fitness Club has a fully private Ladies-only zone with dedicated equipment, alongside a separate Gents section, both under one roof.",
   },
   {
     q: "What services and training do you offer?",
@@ -104,7 +109,7 @@ export const reviews = [
     role: "Member, 1 year",
     avatar: "avatar-2",
     stars: 5,
-    text: "Best gym in Karaitivu. Been a member for over a year — real progress and a friendly community.",
+    text: "Best gym in Karaitivu. Been a member for over a year with real progress and a friendly community.",
   },
   {
     name: "Nishani P.",

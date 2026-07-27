@@ -25,7 +25,7 @@ export function Membership() {
                 Monthly, quarterly and yearly.
               </h2>
               <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
-                Call for current rates — we'll match you to the plan that fits. No hidden fees, no
+                Call for current rates: we'll match you to the plan that fits. No hidden fees, no
                 online signup needed.
               </p>
             </div>

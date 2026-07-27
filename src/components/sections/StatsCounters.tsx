@@ -7,7 +7,7 @@ const items = [
   { label: "Google reviews", value: Number(CLUB.reviewCount), suffix: "+", icon: MessageCircle },
   { label: "Star rating", value: Number(CLUB.rating), suffix: "★", icon: Star, decimals: 1 },
   { label: "Doors open", value: 6, suffix: " AM", icon: Timer },
-  { label: "Sections — ladies & gents", value: 2, suffix: "", icon: Users },
+  { label: "Sections (ladies & gents)", value: 2, suffix: "", icon: Users },
 ];
 
 /** Counts up once, the first time it scrolls into view. */

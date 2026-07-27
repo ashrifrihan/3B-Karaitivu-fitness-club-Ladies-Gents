@@ -70,16 +70,22 @@ export function ContactFooter() {
                 </div>
 
                 <div className="flex gap-2.5 pt-3">
-                  {[Instagram, Facebook, MessageCircle].map((Icon, i) => (
-                    <a
-                      key={i}
-                      href="#"
-                      aria-label="Social link"
-                      className="grid place-items-center h-11 w-11 rounded-full border border-white/10 hover:border-primary hover:text-primary transition-colors"
-                    >
-                      <Icon size={17} />
-                    </a>
-                  ))}
+                  <a
+                    href={CLUB.facebookUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Facebook Page"
+                    className="grid place-items-center h-11 w-11 rounded-full border border-white/10 hover:border-primary hover:text-primary transition-colors"
+                  >
+                    <Facebook size={17} />
+                  </a>
+                  <a
+                    href={CLUB.phoneHref}
+                    aria-label="Call or WhatsApp"
+                    className="grid place-items-center h-11 w-11 rounded-full border border-white/10 hover:border-primary hover:text-primary transition-colors"
+                  >
+                    <MessageCircle size={17} />
+                  </a>
                 </div>
               </div>
             </div>
@@ -89,9 +95,10 @@ export function ContactFooter() {
             <div className="rounded-3xl overflow-hidden border border-white/8 h-full min-h-[420px]">
               <iframe
                 title="Map to 3B Karaitivu Fitness Club"
-                src="https://www.google.com/maps?q=11+Main+Street+Karaitivu+13250+Sri+Lanka&output=embed"
+                src={CLUB.embedMapUrl}
                 className="w-full h-full min-h-[420px]"
                 loading="lazy"
+                referrerPolicy="strict-origin-when-cross-origin"
               />
             </div>
           </Reveal>
@@ -106,7 +113,7 @@ export function ContactFooter() {
               <span className="font-medium tracking-tight">{CLUB.shortName}</span>
             </div>
             <p className="text-sm text-muted-foreground max-w-xs leading-relaxed">
-              Karaitivu's fitness club — separate Ladies &amp; Gents sections, open daily.
+              Karaitivu's fitness club, separate Ladies &amp; Gents sections, open daily.
             </p>
           </div>
           <div>
